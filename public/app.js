@@ -92,7 +92,7 @@ function render(){
 }
 const fields={
  Warga:[['name','Nama lengkap','text',true],['nik','NIK (opsional, 16 digit)','text'],['kk','Nomor KK (opsional, 16 digit)','text'],['address','Alamat','text',true],['rt','RT','text',true],['rw','RW','text',true],['gender','Jenis kelamin',['Laki-laki','Perempuan']],['birthplace','Tempat lahir','text'],['birthdate','Tanggal lahir','date'],['phone','Nomor WhatsApp','tel'],['occupation','Pekerjaan','text'],['religion','Agama','text'],['family','Hubungan keluarga',['Kepala Keluarga','Suami','Istri','Anak','Orang tua','Lainnya']],['status','Status warga',['Tetap','Kontrak','Pindah','Meninggal']]],
- Transaksi:[['date','Tanggal','date',true],['type','Jenis transaksi',['MASUK','KELUAR'],true],['category','Jenis iuran','categories',true],['name','Nama pembayar / penerima','text',true],['amount','Nominal rupiah','number',true],['note','Keterangan','textarea']],
+ Transaksi:[['date','Tanggal','date',true],['type','Jenis transaksi',['MASUK','KELUAR'],true],['category','Jenis iuran','categories',true],['name','Nama pembayar / penerima','text',true],['amount','Nominal rupiah','number',true],['note','Keterangan (tampil di Beranda jika keterangan publik kosong)','textarea'],['publicNote','Keterangan publik (opsional)','textarea']],
  Informasi:[['title','Judul informasi','text',true],['date','Tanggal','date',true],['body','Isi informasi','textarea',true],['photo','Foto informasi (maksimal 5 MB)','file'],['published','Terbitkan di Beranda','checkbox']],
  Kategori:[['name','Nama jenis iuran','text',true]]
 };

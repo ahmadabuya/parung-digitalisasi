@@ -7,3 +7,14 @@
 #payContent form{display:grid;gap:14px;margin:24px 0}
 #payContent>button{margin:8px 0}
 #payContent select{max-width:100%}
+
+.financePanel{background:white;border:1px solid #dce7e8;border-radius:14px;padding:22px;margin-top:20px}
+.financeMonth{margin:20px 0}
+.financeLine{display:grid;grid-template-columns:62px minmax(70px,1fr) 150px;gap:12px;align-items:center;margin-top:9px;font-size:14px}
+.financeLine>strong{text-align:right;font-size:14px}
+.financeTrack{height:18px;background:#eef3f3;border-radius:5px;overflow:hidden}
+.financeBar{height:100%;background:#14856d;border-radius:5px}
+.financeBar.expense{background:#c67b38}
+#financeSearch{max-width:300px}
+#financeRows td:nth-child(4){white-space:normal;min-width:180px;overflow-wrap:anywhere}
+@media(max-width:520px){.financeLine{grid-template-columns:48px 1fr;gap:7px}.financeLine>strong{grid-column:2;text-align:left}.financePanel{padding:16px}#financeSearch{max-width:100%}}
