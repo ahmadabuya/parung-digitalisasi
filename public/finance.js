@@ -1,4 +1,5 @@
 let publicFinanceData=null;
+const financePager=createPager($('financeRows').closest('.tablewrap'),renderPublicFinance);
 function financePeriodRows() {
  const from=$('financeFrom').value,to=$('financeTo').value,category=$('financeCategory').value;
  return publicFinanceData.transactions.filter(t=>
@@ -44,7 +45,7 @@ function renderPublicFinance() {
  const details=rows.filter(t=>[t.note,publicFinanceData.categories.find(c=>c.id===t.category)?.name]
  .join(' ').toLowerCase().includes(query)).sort((a,b)=>b.date.localeCompare(a.date));
  $('financeRows').replaceChildren();
- details.forEach(t=>{
+ financePager.slice(details,[$('financeFrom').value,$('financeTo').value,$('financeCategory').value,$('financeSearch').value].join('|')).forEach(t=>{
  const row=E('tr');
  const categoryName=publicFinanceData.categories.find(c=>c.id===t.category)?.name||'Jenis iuran lama';
  [t.date.split('-').reverse().join('/'),categoryName,t.type==='MASUK'?'Pemasukan':'Pengeluaran',t.note||'—',money(t.amount)]

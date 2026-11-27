@@ -25,10 +25,24 @@ function notice(error){$('status').textContent=error?.message||'';}
 function access(){document.querySelectorAll('.private').forEach(e=>e.hidden=!token);$('account').textContent=token?'Keluar':'Login Pengurus';}
 function logout(){token='';data={};sessionStorage.removeItem('wargahub-token');access();navigate('home');}
 let announcements=[],announcementIndex=0,newsRequest=0;
+let autoplayPaused=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const carousel=document.querySelector('.carousel');
+$('newsAutoplay').textContent=autoplayPaused?'Putar otomatis':'Jeda otomatis';
+$('newsAutoplay').onclick=()=>{
+ autoplayPaused=!autoplayPaused;
+ $('newsAutoplay').textContent=autoplayPaused?'Putar otomatis':'Jeda otomatis';
+};
+setInterval(()=>{
+ if(!autoplayPaused && announcements.length>1 && page==='home' && !document.hidden &&
+ !carousel.matches(':hover') && !carousel.contains(document.activeElement) && !$('newsDetail').open) {
+ moveAnnouncement(1);
+ }
+},6000);
 function renderAnnouncement(){
  const container=$('newsGrid');
  container.replaceChildren();
  $('carouselControls').hidden=announcements.length<2;
+ $('newsAutoplay').hidden=announcements.length<2;
  $('newsPosition').textContent='';
  $('newsDots').replaceChildren();
  if(!announcements.length){
@@ -85,7 +99,7 @@ async function home(){
  announcements=result.data;announcementIndex=0;renderAnnouncement();
  }catch(e){
  if(request!==newsRequest)return;
- announcements=[];$('carouselControls').hidden=true;$('newsPosition').textContent='';
+ announcements=[];$('newsAutoplay').hidden=true;$('carouselControls').hidden=true;$('newsPosition').textContent='';
  $('newsGrid').replaceChildren(E('p',e.message,'empty'));
  }finally{if(request===newsRequest)$('newsGrid').removeAttribute('aria-busy');}
 }
@@ -136,7 +150,7 @@ function render(){
  stat('Jumlah warga',String(rows.length));stat('Kartu keluarga terisi',String(new Set(rows.map(r=>r.kk).filter(Boolean)).size));stat('RT terdata',String(new Set(rows.map(r=>r.rt)).size));
  }else if(page==='Informasi'){stat('Informasi',String(rows.length));stat('Diterbitkan',String(rows.filter(r=>r.published).length));stat('Draf',String(rows.filter(r=>!r.published).length));}
  const head=E('tr');columns[page].forEach(([,name])=>head.append(E('th',name)));head.append(E('th','Tindakan'));$('thead').replaceChildren(head);$('tbody').replaceChildren();
- rows.forEach(r=>{
+ adminPager.slice(rows,[page,$('search').value,$('start').value,$('end').value,$('categoryFilter').value].join('|')).forEach(r=>{
  const tr=E('tr');
  columns[page].forEach(([key])=>{
  let value=r[key]||'';
@@ -224,4 +238,5 @@ document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>navigate(b.dat
 document.querySelectorAll('.close').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 $('account').onclick=()=>token?logout():$('login').showModal();$('add').onclick=()=>openEditor();
 ['search','categoryFilter','start','end'].forEach(id=>$(id).addEventListener('input',render));
+const adminPager=createPager($('tbody').closest('.tablewrap'),render);
 $('reload').onclick=reload;$('refreshHome').onclick=home;access();home();

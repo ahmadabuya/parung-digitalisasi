@@ -9,7 +9,7 @@
 <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Pengumuman lingkungan">
 <div id="newsGrid" class="carouselViewport"></div>
 <div id="carouselControls" class="carouselControls" hidden><button id="newsPrev" class="outline" aria-label="Informasi sebelumnya">Sebelumnya</button><div id="newsDots" class="newsDots" aria-label="Pilih informasi"></div><button id="newsNext" class="outline" aria-label="Informasi berikutnya">Berikutnya</button></div>
-<p id="newsPosition" class="hint" aria-live="polite"></p>
+<button id="newsAutoplay" class="outline" hidden>Jeda otomatis</button><p id="newsPosition" class="hint" aria-live="polite"></p>
 </div></section>
 <section id="publicFinance" aria-labelledby="financeTitle">
 <div class="sectionhead"><div><span class="eyebrow">TRANSPARANSI KAS</span><h2 id="financeTitle">Keuangan lingkungan</h2></div><button id="financeReload" class="outline">Muat ulang kas</button></div>
@@ -25,4 +25,4 @@
 <footer><div><strong id="footerBrand">WargaHub</strong><p>Administrasi rapi, kebersamaan terjaga.</p></div><a id="contact" hidden target="_blank" rel="noopener">Hubungi pengurus</a><small>© @bangabuy</small></footer>
 <dialog id="login"><form id="loginForm"><div class="modalhead"><h2>Login Pengurus</h2><button type="button" class="close outline" aria-label="Tutup">×</button></div><p>Akses pengelolaan data warga dan kas lingkungan.</p><label>Password<input name="password" type="password" autocomplete="current-password" required></label><p class="error" id="loginError" role="alert"></p><button type="submit">Masuk</button></form></dialog>
 <dialog id="editor"><form id="editForm"><div class="modalhead"><h2 id="editTitle">Tambah Data</h2><button type="button" class="close outline" aria-label="Tutup">×</button></div><div id="fields" class="fields"></div><p id="editError" class="error" role="alert"></p><button type="submit">Simpan Data</button></form></dialog>
-<dialog id="payDialog"><div id="payContent"></div></dialog><dialog id="newsDetail"><div class="modalhead"><h2 id="newsDetailTitle"></h2><button class="outline" id="newsDetailClose" aria-label="Tutup informasi">×</button></div><time id="newsDetailDate"></time><img id="newsDetailImage" alt="" hidden><div id="newsDetailBody"></div></dialog><script src="config.js"></script><script src="app.js"></script><script src="payments.js"></script><script src="finance.js"></script></body></html>
+<dialog id="payDialog"><div id="payContent"></div></dialog><dialog id="newsDetail"><div class="modalhead"><h2 id="newsDetailTitle"></h2><button class="outline" id="newsDetailClose" aria-label="Tutup informasi">×</button></div><time id="newsDetailDate"></time><img id="newsDetailImage" alt="" hidden><div id="newsDetailBody"></div></dialog><script src="config.js"></script><script src="pagination.js"></script><script src="app.js"></script><script src="payments.js"></script><script src="finance.js"></script></body></html>

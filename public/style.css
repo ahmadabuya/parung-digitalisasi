@@ -50,3 +50,47 @@ main{max-width:1240px}
 #newsDetailTitle{overflow-wrap:anywhere}
 button:focus-visible,a:focus-visible{outline:3px solid #a4bf63;outline-offset:3px}
 @media(max-width:700px){.featureNews{grid-template-columns:1fr}.featureVisual{aspect-ratio:16/9}.featureContent{padding:25px}.homeIntro{padding-top:2px}.carouselControls>button{padding:9px;font-size:13px}#publicFinance{margin-top:28px}}
+
+/* Black and gold */
+:root{color-scheme:dark}
+body{background:radial-gradient(ellipse at top right,#352716,#101010 65%);color:#f2ecdf}
+header{background:#101010;border-color:#554226;box-shadow:0 5px 25px #0004}
+.brand{color:#f5e6c9}.mark{background:linear-gradient(135deg,#e9c17a,#bd852e);color:#171006}
+nav button{color:#c8bcaa}
+nav .active{background:#3a2b16;color:#f5cf86}
+button,.cta{background:linear-gradient(135deg,#f4d08a,#c59138);color:#171107}
+button.outline{background:#211d16;border-color:#72552a;color:#f0cd8d}
+.eyebrow{color:#d8a64e}
+.homeIntro p,.hint,.stat small,.news time{color:#bcb09d}
+.featureNews{background:linear-gradient(140deg,#312314,#151311);border:1px solid #805b2b;box-shadow:0 16px 40px #0005}
+.featureContent time{color:#e7bd70}
+.featureExcerpt{color:#d2c6b3}
+.newsRead{background:linear-gradient(135deg,#f4d08a,#c59138);color:#171107}
+.featureVisual{background:#1b1813}
+.featureVisual.noPhoto{background:radial-gradient(circle at 25% 30%,#946a30,transparent 60%),linear-gradient(140deg,#3c2b17,#17130e)}
+.featureVisual.noPhoto:after{border-color:#e4ba6d66;box-shadow:0 0 0 35px #e4ba6d10,0 0 0 70px #e4ba6d08}
+.newsDot{background:#62513a}.newsDot[aria-current=true]{background:#e4ba6d}
+.stat,.financePanel,.tablewrap,.news,dialog{background:#191816;border-color:#53432b;color:#f2ecdf}
+.stat,.financePanel{box-shadow:0 8px 25px #0003}
+input,select,textarea{background:#121211;border-color:#655136;color:#f2ecdf}
+input::placeholder{color:#aa9b85}
+th{background:#302719;color:#f0d6aa}
+td,th{border-bottom-color:#3b3226}
+.chip{background:#302719;color:#e8d3ad}
+#publicFinance{border-color:#554226}
+.financeTrack{background:#312b21}
+.financeBar{background:#78bb91}.financeBar.expense{background:#e5ad5b}
+.in{color:#8dd3a9}.out{color:#efb66a}
+footer{background:#0c0b09;border-top:1px solid #6e5027;color:#c4b59c}
+footer a{color:#ecc479}
+.error{color:#ffb0a2}
+.empty{border-color:#655136;color:#c5b8a2}
+dialog::backdrop{background:#000b}
+.paymentItem{border-color:#554226}
+.pagination{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:16px 0;color:#c5b8a2;font-size:14px}
+.pagination label{display:flex;align-items:center;gap:8px;margin-right:auto}
+.pagination select{width:85px}
+.pagination button{font-size:14px;padding:9px 12px}
+button:disabled{opacity:.4;cursor:default}
+#newsAutoplay{font-size:14px;margin-top:12px}
+@media(max-width:520px){.pagination{justify-content:flex-start}.pagination label{width:100%}}
