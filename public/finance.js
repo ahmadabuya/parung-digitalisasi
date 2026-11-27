@@ -10,7 +10,7 @@ function renderPublicFinance() {
  const from=$('financeFrom').value,to=$('financeTo').value,category=$('financeCategory').value;
  $('financeError').textContent='';
  if(from&&to&&from>to){$('financeError').textContent='Tanggal awal harus sebelum atau sama dengan tanggal akhir.';
- $('financeStats').replaceChildren();$('financeChart').replaceChildren();$('financeRows').replaceChildren();$('financeCount').textContent='';return;}
+ $('financeSummary').replaceChildren();$('financeStats').replaceChildren();$('financeChart').replaceChildren();$('financeRows').replaceChildren();$('financeCount').textContent='';return;}
  const rows=financePeriodRows(),sum=(list,type)=>list.filter(t=>t.type===type).reduce((n,t)=>n+t.amount,0);
  const allCategory=publicFinanceData.transactions.filter(t=>!category||t.category===category);
  const throughEnd=allCategory.filter(t=>!to||t.date<=to);
@@ -42,10 +42,11 @@ function renderPublicFinance() {
  });
  if(!rows.length)$('financeChart').append(E('p','Belum ada transaksi pada periode ini.','hint'));
  const query=$('financeSearch').value.trim().toLowerCase();
- const details=rows.filter(t=>[t.name,t.note,publicFinanceData.categories.find(c=>c.id===t.category)?.name]
+ const details=rows.filter(t=>(!$('financeType').value||t.type===$('financeType').value)&&[t.name,t.note,publicFinanceData.categories.find(c=>c.id===t.category)?.name]
  .join(' ').toLowerCase().includes(query)).sort((a,b)=>b.date.localeCompare(a.date));
+ renderTransactionSummary($('financeSummary'),details);
  $('financeRows').replaceChildren();
- financePager.slice(details,[$('financeFrom').value,$('financeTo').value,$('financeCategory').value,$('financeSearch').value].join('|')).forEach(t=>{
+ financePager.slice(details,[$('financeType').value,$('financeFrom').value,$('financeTo').value,$('financeCategory').value,$('financeSearch').value].join('|')).forEach(t=>{
  const row=E('tr');
  const categoryName=publicFinanceData.categories.find(c=>c.id===t.category)?.name||'Jenis iuran lama';
  [t.date.split('-').reverse().join('/'),t.name||'—',categoryName,t.type==='MASUK'?'Pemasukan':'Pengeluaran',t.note||'—',money(t.amount)]
@@ -70,7 +71,7 @@ async function loadPublicFinance(){
 }
 $('financeFrom').value=dateNow().slice(0,7)+'-01';
 $('financeTo').value=dateNow();
-['financeFrom','financeTo','financeCategory','financeSearch'].forEach(id=>$(id).addEventListener('input',renderPublicFinance));
+['financeFrom','financeTo','financeCategory','financeType','financeSearch'].forEach(id=>$(id).addEventListener('input',renderPublicFinance));
 $('financeAll').onclick=()=>{$('financeFrom').value='';$('financeTo').value='';renderPublicFinance();};
 $('financeReload').onclick=loadPublicFinance;
 document.querySelector('[data-page="home"]').addEventListener('click',loadPublicFinance);

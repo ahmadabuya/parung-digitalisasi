@@ -100,3 +100,12 @@ button:disabled{opacity:.4;cursor:default}
 .residentSummary h2{font-size:clamp(30px,4vw,46px);letter-spacing:-1.2px}
 .residentSummary .stat{min-height:112px}
 .residentSummary .stats{margin-bottom:12px}
+
+.tableSummary{margin:22px 0}
+.summaryGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.summaryGrid .stat{padding:18px}
+.summaryGrid .stat strong{font-size:22px;overflow-wrap:anywhere}
+#home #publicFinance>.sectionhead:has(#financeSearch){flex-wrap:wrap}
+#financeType{max-width:210px}
+@media(max-width:900px){.summaryGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.summaryGrid{grid-template-columns:1fr}}

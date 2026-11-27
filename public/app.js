@@ -111,8 +111,8 @@ function navigate(next){
  if(page==='home'){home();return;}
  $('pageTitle').textContent={Warga:'Data Warga',Transaksi:'Kas & Iuran',Informasi:'Informasi Warga',Kategori:'Jenis Iuran'}[page];
  $('add').textContent='Tambah '+{Warga:'Warga',Transaksi:'Transaksi',Informasi:'Informasi',Kategori:'Jenis Iuran'}[page];
- ['categoryFilter','start','end'].forEach(id=>$(id).hidden=page!=='Transaksi');
- $('search').value='';$('start').value='';$('end').value='';$('categoryFilter').value='';
+ ['categoryFilter','transactionType','start','end'].forEach(id=>$(id).hidden=page!=='Transaksi');
+ $('search').value='';$('start').value='';$('end').value='';$('categoryFilter').value='';$('transactionType').value='';
  if(!data.Warga)reload();else render();
 }
 function filtered(){
@@ -120,7 +120,7 @@ function filtered(){
  return(data[page]||[]).filter(r=>{
  const category=data.Kategori?.find(c=>c.id===r.category)?.name||'';
  return Object.values({...r,photo:'',category}).join(' ').toLowerCase().includes(q)&&
- (page!=='Transaksi'||((!$('categoryFilter').value||r.category===$('categoryFilter').value)&&
+ (page!=='Transaksi'||((!$('transactionType').value||r.type===$('transactionType').value)&&(!$('categoryFilter').value||r.category===$('categoryFilter').value)&&
  (!$('start').value||r.date>=$('start').value)&&(!$('end').value||r.date<=$('end').value)));
  });
 }
@@ -135,6 +135,8 @@ function render(){
  $('categoryFilter').replaceChildren(new Option('Semua jenis iuran',''),...(data.Kategori||[]).map(c=>new Option(c.name,c.id)));
  $('categoryFilter').value=selected;
  const rows=filtered();
+ $('adminSummary').hidden=page!=='Transaksi';
+ if(page==='Transaksi')renderTransactionSummary($('adminSummary'),rows);
  $('stats').replaceChildren();$('categorySummary').replaceChildren();
  const stat=(label,value)=>{const e=E('div','','stat');e.append(E('small',label),E('strong',value));$('stats').append(e);};
  if(page==='Transaksi'){
@@ -150,7 +152,7 @@ function render(){
  stat('Jumlah warga',String(rows.length));stat('Kartu keluarga terisi',String(new Set(rows.map(r=>r.kk).filter(Boolean)).size));stat('RT terdata',String(new Set(rows.map(r=>r.rt)).size));
  }else if(page==='Informasi'){stat('Informasi',String(rows.length));stat('Diterbitkan',String(rows.filter(r=>r.published).length));stat('Draf',String(rows.filter(r=>!r.published).length));}
  const head=E('tr');columns[page].forEach(([,name])=>head.append(E('th',name)));head.append(E('th','Tindakan'));$('thead').replaceChildren(head);$('tbody').replaceChildren();
- adminPager.slice(rows,[page,$('search').value,$('start').value,$('end').value,$('categoryFilter').value].join('|')).forEach(r=>{
+ adminPager.slice(rows,[page,$('transactionType').value,$('search').value,$('start').value,$('end').value,$('categoryFilter').value].join('|')).forEach(r=>{
  const tr=E('tr');
  columns[page].forEach(([key])=>{
  let value=r[key]||'';
@@ -237,6 +239,6 @@ $('export').onclick=()=>{
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>navigate(b.dataset.page));
 document.querySelectorAll('.close').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 $('account').onclick=()=>token?logout():$('login').showModal();$('add').onclick=()=>openEditor();
-['search','categoryFilter','start','end'].forEach(id=>$(id).addEventListener('input',render));
+['search','categoryFilter','transactionType','start','end'].forEach(id=>$(id).addEventListener('input',render));
 const adminPager=createPager($('tbody').closest('.tablewrap'),render);
 $('reload').onclick=reload;$('refreshHome').onclick=home;access();home();
