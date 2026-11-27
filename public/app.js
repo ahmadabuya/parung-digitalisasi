@@ -8,7 +8,15 @@ if(/^https:\/\/wa.me\/\d+$/.test(config.contact)){$('contact').href=config.conta
 async function api(action,extra={}){
  if(config.api.includes('GANTI-'))throw new Error('Isi alamat Worker di public/config.js untuk menghubungkan data.');
  const response=await fetch(config.api,{method:'POST',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:JSON.stringify({action,...extra})});
- const result=await response.json();
+ const raw=await response.text();
+ let result;
+ try { result=JSON.parse(raw); }
+ catch {
+   throw new Error('Worker mengembalikan halaman teks, bukan data API (HTTP '+response.status+'). Pastikan kode worker.js terbaru sudah di-Deploy pada Worker yang sama dengan config.js.');
+ }
+ if(!result || typeof result.ok!=='boolean') {
+   throw new Error('Format respons Worker tidak sesuai. Perbarui kode Worker WargaHub.');
+ }
  if(response.status===401 && action!=='login') logout();
  if(!result.ok)throw new Error(result.error||'Permintaan gagal.');
  return result;
