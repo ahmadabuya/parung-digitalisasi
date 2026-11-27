@@ -24,17 +24,70 @@ async function api(action,extra={}){
 function notice(error){$('status').textContent=error?.message||'';}
 function access(){document.querySelectorAll('.private').forEach(e=>e.hidden=!token);$('account').textContent=token?'Keluar':'Login Pengurus';}
 function logout(){token='';data={};sessionStorage.removeItem('wargahub-token');access();navigate('home');}
-async function home(){
- try{
- const result=await api('public');$('newsGrid').replaceChildren();
- for(const n of result.data){
- const card=E('article','','news');
- if(n.photo){const image=E('img');image.src=n.photo;image.alt=n.title;image.loading='lazy';card.append(image);}
- const content=E('div','','content');const time=E('time',n.date.split('-').reverse().join('/'));time.dateTime=n.date;
- content.append(time,E('h3',n.title),E('div',n.body,'body'));card.append(content);$('newsGrid').append(card);
+let announcements=[],announcementIndex=0,newsRequest=0;
+function renderAnnouncement(){
+ const container=$('newsGrid');
+ container.replaceChildren();
+ $('carouselControls').hidden=announcements.length<2;
+ $('newsPosition').textContent='';
+ $('newsDots').replaceChildren();
+ if(!announcements.length){
+ container.append(E('p','Belum ada informasi yang diterbitkan.','empty'));return;
  }
- if(!result.data.length)$('newsGrid').append(E('p','Belum ada informasi. Pengurus dapat menambahkan pengumuman setelah login.','empty'));
- }catch(e){$('newsGrid').replaceChildren(E('p',e.message,'empty'));}
+ const n=announcements[announcementIndex],card=E('article','','featureNews');
+ const visual=E('div','','featureVisual');
+ if(n.photo){
+ const image=E('img');image.src=n.photo;image.alt=n.title;
+ image.onerror=()=>{image.hidden=true;visual.classList.add('noPhoto');};
+ visual.append(image);
+ }else visual.classList.add('noPhoto');
+ const content=E('div','','featureContent'),time=E('time',n.date.split('-').reverse().join('/'));
+ time.dateTime=n.date;
+ const read=E('button','Baca informasi','newsRead');read.type='button';
+ read.onclick=()=>{
+ $('newsDetailTitle').textContent=n.title;$('newsDetailDate').textContent=time.textContent;
+ $('newsDetailBody').textContent=n.body;
+ $('newsDetailImage').hidden=!n.photo;
+ $('newsDetailImage').src=n.photo||'';$('newsDetailImage').alt=n.title;
+ $('newsDetail').showModal();
+ };
+ content.append(time,E('h2',n.title),E('p',n.body,'featureExcerpt'),read);
+ card.append(visual,content);container.append(card);
+ announcements.forEach((item,index)=>{
+ const dot=E('button','','newsDot');dot.type='button';dot.setAttribute('aria-label','Informasi '+(index+1)+': '+item.title);
+ dot.setAttribute('aria-current',index===announcementIndex?'true':'false');
+ dot.onclick=()=>{announcementIndex=index;renderAnnouncement();$('newsDots').children[index]?.focus();};
+ $('newsDots').append(dot);
+ });
+ $('newsPosition').textContent='Informasi '+(announcementIndex+1)+' dari '+announcements.length;
+}
+function moveAnnouncement(step){
+ if(announcements.length<2)return;
+ announcementIndex=(announcementIndex+step+announcements.length)%announcements.length;renderAnnouncement();
+}
+$('newsPrev').onclick=()=>moveAnnouncement(-1);
+$('newsNext').onclick=()=>moveAnnouncement(1);
+$('newsDetailClose').onclick=()=>$('newsDetail').close();
+let touchStart=null;
+$('newsGrid').addEventListener('touchstart',event=>{touchStart={x:event.changedTouches[0].clientX,y:event.changedTouches[0].clientY};},{passive:true});
+$('newsGrid').addEventListener('touchend',event=>{
+ if(!touchStart)return;
+ const dx=event.changedTouches[0].clientX-touchStart.x,dy=event.changedTouches[0].clientY-touchStart.y;
+ if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))moveAnnouncement(dx<0?1:-1);
+ touchStart=null;
+},{passive:true});
+async function home(){
+ const request=++newsRequest;
+ $('newsGrid').setAttribute('aria-busy','true');
+ try{
+ const result=await api('public');
+ if(request!==newsRequest)return;
+ announcements=result.data;announcementIndex=0;renderAnnouncement();
+ }catch(e){
+ if(request!==newsRequest)return;
+ announcements=[];$('carouselControls').hidden=true;$('newsPosition').textContent='';
+ $('newsGrid').replaceChildren(E('p',e.message,'empty'));
+ }finally{if(request===newsRequest)$('newsGrid').removeAttribute('aria-busy');}
 }
 async function reload(){notice();try{data=(await api('all')).data;render();}catch(e){notice(e);}}
 function navigate(next){
