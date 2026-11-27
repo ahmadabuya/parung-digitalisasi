@@ -42,14 +42,14 @@ function renderPublicFinance() {
  });
  if(!rows.length)$('financeChart').append(E('p','Belum ada transaksi pada periode ini.','hint'));
  const query=$('financeSearch').value.trim().toLowerCase();
- const details=rows.filter(t=>[t.note,publicFinanceData.categories.find(c=>c.id===t.category)?.name]
+ const details=rows.filter(t=>[t.name,t.note,publicFinanceData.categories.find(c=>c.id===t.category)?.name]
  .join(' ').toLowerCase().includes(query)).sort((a,b)=>b.date.localeCompare(a.date));
  $('financeRows').replaceChildren();
  financePager.slice(details,[$('financeFrom').value,$('financeTo').value,$('financeCategory').value,$('financeSearch').value].join('|')).forEach(t=>{
  const row=E('tr');
  const categoryName=publicFinanceData.categories.find(c=>c.id===t.category)?.name||'Jenis iuran lama';
- [t.date.split('-').reverse().join('/'),categoryName,t.type==='MASUK'?'Pemasukan':'Pengeluaran',t.note||'—',money(t.amount)]
- .forEach((value,i)=>row.append(E('td',value,i===4?(t.type==='MASUK'?'in':'out'):'')));
+ [t.date.split('-').reverse().join('/'),t.name||'—',categoryName,t.type==='MASUK'?'Pemasukan':'Pengeluaran',t.note||'—',money(t.amount)]
+ .forEach((value,i)=>row.append(E('td',value,i===5?(t.type==='MASUK'?'in':'out'):'')));
  $('financeRows').append(row);
  });
  $('financeCount').textContent=details.length+' transaksi ditampilkan. Pembayaran warga tercatat setelah disetujui pengurus.';

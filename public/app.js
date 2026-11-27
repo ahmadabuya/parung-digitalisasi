@@ -6,7 +6,7 @@ let token=sessionStorage.getItem('wargahub-token')||'', data={},page='home',edit
 $('brand').textContent=$('footerBrand').textContent=config.name;$('area').textContent=config.area;
 if(/^https:\/\/wa.me\/\d+$/.test(config.contact)){$('contact').href=config.contact;$('contact').hidden=false;}
 async function api(action,extra={}){
- if(config.api.includes('GANTI-'))throw new Error('Isi alamat Worker di public/config.js untuk menghubungkan data.');
+ if(!/^https:\/\//.test(config.api) || config.api.includes('GANTI-'))throw new Error('Isi alamat Worker di public/config.js untuk menghubungkan data.');
  const response=await fetch(config.api,{method:'POST',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:JSON.stringify({action,...extra})});
  const raw=await response.text();
  let result;

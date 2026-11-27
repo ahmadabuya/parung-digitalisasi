@@ -41,8 +41,6 @@ async function openPayment(){
  paymentContent.append(E('p','Bayar melalui aplikasi DANA atau pindai QR yang tersedia. Periksa nama penerima dan nominal sebelum menyelesaikan pembayaran. Setelah membayar, unggah bukti di bawah.','hint'));
  const form=E('form');
  paymentField(form,'name','Nama pembayar').maxLength=100;
- paymentField(form,'phone','Nomor WhatsApp','tel').maxLength=20;
- paymentField(form,'address','Alamat / RT / nomor rumah');
  const category=paymentField(form,'category','Jenis iuran','select');
  category.append(new Option('Pilih jenis iuran',''),...c.categories.map(x=>new Option(x.name,x.id)));
  const amount=paymentField(form,'amount','Nominal yang dibayar (Rp)','number');amount.min=1;amount.max=1000000000;amount.step=1;
@@ -93,7 +91,7 @@ async function openPaymentAdmin(){
  list.forEach(d=>{
  const section=E('section','','paymentItem');
  section.append(E('h3',d.name),E('p',d.categoryName+' · '+money(d.amount)),
- E('p',d.address+' · '+d.phone),E('p',d.date+' · '+statusLabels[d.status]),
+ E('p',d.date+' · '+statusLabels[d.status]),
  E('p','Referensi '+d.id,'hint'),E('p','Tujuan '+d.recipient+' · '+d.recipientNumber,'hint'));
  const image=E('img');image.hidden=true;image.className='paymentProof';
  section.append(paymentAction('Lihat Bukti',async()=>{

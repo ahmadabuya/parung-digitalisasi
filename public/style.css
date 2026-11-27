@@ -16,7 +16,7 @@
 .financeBar{height:100%;background:#14856d;border-radius:5px}
 .financeBar.expense{background:#c67b38}
 #financeSearch{max-width:300px}
-#financeRows td:nth-child(4){white-space:normal;min-width:180px;overflow-wrap:anywhere}
+#financeRows td:nth-child(5){white-space:normal;min-width:180px;overflow-wrap:anywhere}
 @media(max-width:520px){.financeLine{grid-template-columns:48px 1fr;gap:7px}.financeLine>strong{grid-column:2;text-align:left}.financePanel{padding:16px}#financeSearch{max-width:100%}}
 
 body{background:#f3f6f8;color:#17353c}
