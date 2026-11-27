@@ -103,7 +103,7 @@ async function home(){
  $('newsGrid').replaceChildren(E('p',e.message,'empty'));
  }finally{if(request===newsRequest)$('newsGrid').removeAttribute('aria-busy');}
 }
-async function reload(){notice();try{data=(await api('all')).data;render();}catch(e){notice(e);}}
+async function reload(){notice();try{data=(await api('all')).data;render();document.dispatchEvent(new Event('residents-updated'));}catch(e){notice(e);}}
 function navigate(next){
  if(next!=='home'&&!token){$('login').showModal();return;}
  page=next;$('home').hidden=page!=='home';$('admin').hidden=page==='home';

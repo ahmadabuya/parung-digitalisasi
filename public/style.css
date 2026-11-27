@@ -94,3 +94,9 @@ dialog::backdrop{background:#000b}
 button:disabled{opacity:.4;cursor:default}
 #newsAutoplay{font-size:14px;margin-top:12px}
 @media(max-width:520px){.pagination{justify-content:flex-start}.pagination label{width:100%}}
+
+.residentSummary{padding-top:4px}
+.residentSummary .sectionhead{margin:12px 0 20px}
+.residentSummary h2{font-size:clamp(30px,4vw,46px);letter-spacing:-1.2px}
+.residentSummary .stat{min-height:112px}
+.residentSummary .stats{margin-bottom:12px}

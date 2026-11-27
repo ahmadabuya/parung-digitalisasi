@@ -4,6 +4,14 @@
 <header><a class="brand" href="#home"><span class="mark">P</span><span id="brand">Parung Digital</span></a><nav aria-label="Menu utama"><button data-page="home" class="active">Beranda</button><button data-page="Warga" class="private" hidden>Data Warga</button><button data-page="Transaksi" class="private" hidden>Keuangan</button><button data-page="Informasi" class="private" hidden>Informasi</button><button data-page="Kategori" class="private" hidden>Jenis Iuran</button><button id="payOpen">Bayar Iuran</button></nav><button id="payAdmin" hidden class="outline">Pembayaran Warga</button><button id="account" class="outline">Login Pengurus</button></header>
 <main>
 <section id="home">
+<section aria-labelledby="residentSummaryTitle" class="residentSummary">
+<div class="sectionhead"><h2 id="residentSummaryTitle">Data Warga</h2><button id="residentRefresh" class="outline">Muat ulang</button></div>
+<div class="stats" id="residentSummaryCards">
+<div class="stat"><small>Jumlah warga</small><strong id="residentTotal">—</strong></div>
+<div class="stat"><small>Kartu keluarga terisi</small><strong id="residentHouseholds">—</strong></div>
+<div class="stat"><small>RT terdata</small><strong id="residentRTs">—</strong></div>
+</div><p id="residentSummaryError" class="error" role="status"></p>
+</section>
 <div class="homeIntro"><div><span class="eyebrow" id="area">PORTAL RT / RW</span><h1>Kabar warga, kas terbuka.</h1><p>Ikuti informasi lingkungan dan pantau pengelolaan iuran bersama.</p></div></div>
 <section id="news" aria-label="Informasi warga"><div class="sectionhead"><h2>Informasi penting</h2><button id="refreshHome" class="outline">Muat ulang</button></div>
 <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Pengumuman lingkungan">
@@ -25,4 +33,4 @@
 <footer><div><strong id="footerBrand">Parung Digital</strong><p>Administrasi rapi, kebersamaan terjaga.</p></div><a id="contact" hidden target="_blank" rel="noopener">Hubungi pengurus</a><small>© @bangabuy</small></footer>
 <dialog id="login"><form id="loginForm"><div class="modalhead"><h2>Login Pengurus</h2><button type="button" class="close outline" aria-label="Tutup">×</button></div><p>Akses pengelolaan data warga dan kas lingkungan.</p><label>Password<input name="password" type="password" autocomplete="current-password" required></label><p class="error" id="loginError" role="alert"></p><button type="submit">Masuk</button></form></dialog>
 <dialog id="editor"><form id="editForm"><div class="modalhead"><h2 id="editTitle">Tambah Data</h2><button type="button" class="close outline" aria-label="Tutup">×</button></div><div id="fields" class="fields"></div><p id="editError" class="error" role="alert"></p><button type="submit">Simpan Data</button></form></dialog>
-<dialog id="payDialog"><div id="payContent"></div></dialog><dialog id="newsDetail"><div class="modalhead"><h2 id="newsDetailTitle"></h2><button class="outline" id="newsDetailClose" aria-label="Tutup informasi">×</button></div><time id="newsDetailDate"></time><img id="newsDetailImage" alt="" hidden><div id="newsDetailBody"></div></dialog><script src="config.js"></script><script src="pagination.js"></script><script src="app.js"></script><script src="payments.js"></script><script src="finance.js"></script></body></html>
+<dialog id="payDialog"><div id="payContent"></div></dialog><dialog id="newsDetail"><div class="modalhead"><h2 id="newsDetailTitle"></h2><button class="outline" id="newsDetailClose" aria-label="Tutup informasi">×</button></div><time id="newsDetailDate"></time><img id="newsDetailImage" alt="" hidden><div id="newsDetailBody"></div></dialog><script src="config.js"></script><script src="pagination.js"></script><script src="app.js"></script><script src="payments.js"></script><script src="finance.js"></script><script src="residents.js"></script></body></html>
