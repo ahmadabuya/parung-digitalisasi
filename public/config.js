@@ -1,6 +1,6 @@
 window.WARGAHUB = {
   name: 'WargaHub',
   area: 'Portal Administrasi RT / RW',
-  api: 'https://GANTI-NAMA-WORKER.workers.dev',
-  contact: ''
+  api: 'wargahub.ahmadabuya0.workers.dev',
+  contact: 'https://wa.me/628979138135'
 };
